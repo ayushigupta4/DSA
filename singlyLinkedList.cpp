@@ -10,6 +10,14 @@ class Node {
         this -> data = data;
         this -> next = NULL;
     }
+
+    ~Node() {
+        int value = this -> data;
+        if(this->next != NULL) {
+            delete next;
+            this->next = NULL;
+        }
+    }
 };
 
 void InsertAtHead(Node* &head, int d) {
@@ -44,6 +52,32 @@ void InsertInMiddle(Node* &head, int position, int d) {
 
 }
 
+void deleteNode(Node* &head, Node* &tail, int position) {
+    Node* temp = head;
+    if(position == 1) {
+        head = head -> next;
+        temp -> next = NULL;
+        delete temp;
+    }
+    
+    int i = 1;
+    while(i < position-1) {
+        temp = temp ->  next;
+        i++;
+    }
+
+    
+
+    Node* curr = temp->next;
+    if(curr->next == NULL) {
+        tail = temp;
+    }
+    temp->next = curr->next;
+    curr->next = NULL;
+    delete curr;
+
+}
+
 void print(Node* &head) {
     Node* temp = head;
     while(temp!=NULL) {
@@ -74,6 +108,13 @@ int main() {
     InsertInMiddle(head,3,100);
     InsertInMiddle(head,1,150);
    
+    print(head);
+    cout << "Head -> " << head -> data << endl;
+    cout << "Tail -> " << tail -> data << endl;
+
+    //deleteNode(head, tail, 1);
+    //deleteNode(head, tail, 3);
+    deleteNode(head, tail, 7);
     print(head);
     cout << "Head -> " << head -> data << endl;
     cout << "Tail -> " << tail -> data << endl;
