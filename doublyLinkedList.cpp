@@ -13,6 +13,20 @@ class Node {
         this->next = NULL;
         this->prev = NULL;
     }
+
+    ~Node() {
+        int value = this->data;
+        if(this->next != NULL) {
+            delete next;
+            this->next = NULL;
+        }
+
+        if(this->prev != NULL) {
+            delete prev;
+            this->prev = NULL;
+        }
+
+    }
 };
 
 void print(Node* head) {
@@ -84,6 +98,41 @@ void insertAtPosition(Node* &head, Node* &tail, int data, int position) {
 
 }
 
+void deleteAtHead(Node* &head) {
+    Node* temp = head;
+    temp->next->prev = NULL;
+    head = head->next;
+    temp->next = NULL;
+    delete temp;
+}
+
+void deleteAtMiddle(Node* &head, int position) {
+    int i=1;
+    Node* temp = head;
+    Node* curr = head->next;
+    while (i<position-1) {
+        temp = temp->next;
+        curr = curr->next;
+    }
+
+    curr->prev = NULL;
+    temp->next = curr->next;
+    if(curr->next!=NULL) {
+        curr->next->prev = temp;
+    }
+    curr->next = NULL;
+    delete curr;
+}
+
+void deleteAtTail(Node* &tail) {
+    Node* temp = tail;
+    tail->prev->next = NULL;
+    tail = tail->prev;
+    temp->prev = NULL;
+    delete temp;
+
+}
+
 int main() {
     Node* head = NULL;
     Node* tail = head;
@@ -97,11 +146,36 @@ int main() {
     cout << "Tail: " << tail->data << endl; 
 
     insertAtTail(head, tail,14);
+    insertAtTail(head, tail,20);
     print(head);
+    cout << "Head: " << head->data << endl;
+    cout << "Tail: " << tail->data << endl; 
+    insertAtTail(head, tail,22);
+    insertAtTail(head, tail,24);
+    print(head);
+    cout << "Head: " << head->data << endl;
+    cout << "Tail: " << tail->data << endl; 
 
     insertAtPosition(head, tail, 16, 2);
     insertAtPosition(head, tail, 18, 4);
     print(head);
+    cout << "Head: " << head->data << endl;
+    cout << "Tail: " << tail->data << endl; 
+
+    deleteAtHead(head);
+    print(head);
+    cout << "Head: " << head->data << endl;
+    cout << "Tail: " << tail->data << endl; 
+
+    deleteAtMiddle(head, 2);
+    print(head);
+    cout << "Head: " << head->data << endl;
+    cout << "Tail: " << tail->data << endl; 
+
+    deleteAtTail(tail);
+    print(head);
+    cout << "Head: " << head->data << endl;
+    cout << "Tail: " << tail->data << endl;
 
     return 0;
 }

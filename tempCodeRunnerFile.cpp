@@ -1,2 +1,4 @@
-
-    Node* curr = tem
+if(this->prev != NULL) {
+            delete prev;
+            this->prev = NULL;
+        }
